@@ -1,0 +1,13 @@
+scenario_name: "Invalid Scenario Example"
+models:
+  - name: HullWhiteOneFactor
+    id: hw1f
+    params:
+      num_paths: 1000
+      time_horizon: 1.0
+  - name: MertonModel
+    id: hw1f  # Duplicate id (should be unique)
+    params:
+      num_paths: 1000
+      time_horizon: 1.0
+# aggregation section is missing (required)
