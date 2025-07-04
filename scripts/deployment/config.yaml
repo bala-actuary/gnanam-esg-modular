@@ -1,0 +1,325 @@
+# ESG Platform Deployment Configuration
+# This file contains configuration for different deployment environments
+
+version: "1.0"
+project: "gnanam-esg-platform"
+
+environments:
+  staging:
+    description: "Staging environment for testing"
+    domain: "staging.esg.gnanam.com"
+    replicas: 1
+    resources:
+      cpu: "500m"
+      memory: "1Gi"
+    scaling:
+      min_replicas: 1
+      max_replicas: 3
+    monitoring:
+      enabled: true
+      prometheus: true
+      grafana: true
+    security:
+      ssl: false
+      authentication: true
+      authorization: true
+    databases:
+      postgres:
+        host: "staging-postgres"
+        port: 5432
+        database: "esg_staging"
+      redis:
+        host: "staging-redis"
+        port: 6379
+    services:
+      api-gateway:
+        port: 8000
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      aggregation-engine:
+        port: 8001
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      monitoring-dashboard:
+        port: 8002
+        health_check: "/health"
+        dependencies: ["postgres"]
+      ai-gateway:
+        port: 8003
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      web-frontend:
+        port: 3000
+        health_check: "/"
+        dependencies: ["api-gateway"]
+      risk-interest-rate:
+        port: 8010
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-credit:
+        port: 8011
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-equity:
+        port: 8012
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-foreign-exchange:
+        port: 8013
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-inflation:
+        port: 8014
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-liquidity:
+        port: 8015
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-counterparty:
+        port: 8016
+        health_check: "/health"
+        dependencies: ["postgres"]
+
+  production:
+    description: "Production environment"
+    domain: "esg.gnanam.com"
+    replicas: 3
+    resources:
+      cpu: "1000m"
+      memory: "2Gi"
+    scaling:
+      min_replicas: 3
+      max_replicas: 10
+    monitoring:
+      enabled: true
+      prometheus: true
+      grafana: true
+      alerting: true
+    security:
+      ssl: true
+      authentication: true
+      authorization: true
+      rate_limiting: true
+    databases:
+      postgres:
+        host: "production-postgres"
+        port: 5432
+        database: "esg_production"
+        ssl: true
+      redis:
+        host: "production-redis"
+        port: 6379
+        ssl: true
+    services:
+      api-gateway:
+        port: 8000
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+        replicas: 3
+      aggregation-engine:
+        port: 8001
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+        replicas: 2
+      monitoring-dashboard:
+        port: 8002
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      ai-gateway:
+        port: 8003
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+        replicas: 2
+      web-frontend:
+        port: 3000
+        health_check: "/"
+        dependencies: ["api-gateway"]
+        replicas: 2
+      risk-interest-rate:
+        port: 8010
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-credit:
+        port: 8011
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-equity:
+        port: 8012
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-foreign-exchange:
+        port: 8013
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-inflation:
+        port: 8014
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-liquidity:
+        port: 8015
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+      risk-counterparty:
+        port: 8016
+        health_check: "/health"
+        dependencies: ["postgres"]
+        replicas: 2
+
+  development:
+    description: "Development environment"
+    domain: "dev.esg.gnanam.com"
+    replicas: 1
+    resources:
+      cpu: "250m"
+      memory: "512Mi"
+    scaling:
+      min_replicas: 1
+      max_replicas: 2
+    monitoring:
+      enabled: false
+      prometheus: false
+      grafana: false
+    security:
+      ssl: false
+      authentication: false
+      authorization: false
+    databases:
+      postgres:
+        host: "dev-postgres"
+        port: 5432
+        database: "esg_development"
+      redis:
+        host: "dev-redis"
+        port: 6379
+    services:
+      api-gateway:
+        port: 8000
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      aggregation-engine:
+        port: 8001
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      monitoring-dashboard:
+        port: 8002
+        health_check: "/health"
+        dependencies: ["postgres"]
+      ai-gateway:
+        port: 8003
+        health_check: "/health"
+        dependencies: ["postgres", "redis"]
+      web-frontend:
+        port: 3000
+        health_check: "/"
+        dependencies: ["api-gateway"]
+      risk-interest-rate:
+        port: 8010
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-credit:
+        port: 8011
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-equity:
+        port: 8012
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-foreign-exchange:
+        port: 8013
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-inflation:
+        port: 8014
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-liquidity:
+        port: 8015
+        health_check: "/health"
+        dependencies: ["postgres"]
+      risk-counterparty:
+        port: 8016
+        health_check: "/health"
+        dependencies: ["postgres"]
+
+# Global configuration
+global:
+  image_registry: "ghcr.io/gnanam-esg"
+  image_pull_policy: "IfNotPresent"
+  restart_policy: "Always"
+  termination_grace_period: 30
+  liveness_probe:
+    initial_delay_seconds: 30
+    period_seconds: 10
+    timeout_seconds: 5
+    failure_threshold: 3
+  readiness_probe:
+    initial_delay_seconds: 5
+    period_seconds: 5
+    timeout_seconds: 3
+    failure_threshold: 3
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+# Deployment strategies
+deployment_strategies:
+  rolling_update:
+    max_surge: 1
+    max_unavailable: 0
+  blue_green:
+    enabled: false
+    switch_timeout: 300
+  canary:
+    enabled: false
+    percentage: 10
+    duration: 300
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention_days: 30
+  storage:
+    type: "s3"
+    bucket: "esg-backups"
+    region: "us-east-1"
+
+# Monitoring configuration
+monitoring:
+  prometheus:
+    enabled: true
+    retention_days: 15
+    scrape_interval: "30s"
+  grafana:
+    enabled: true
+    admin_password: "admin"
+  alerting:
+    enabled: true
+    slack_webhook: ""
+    email: ""
+
+# Security configuration
+security:
+  secrets_management:
+    type: "kubernetes"  # or "vault", "aws-secrets-manager"
+    rotation_enabled: true
+    rotation_interval_days: 90
+  network_policies:
+    enabled: true
+    default_deny: true
+  pod_security_policies:
+    enabled: true
+    privileged: false
+    read_only_root_filesystem: true 

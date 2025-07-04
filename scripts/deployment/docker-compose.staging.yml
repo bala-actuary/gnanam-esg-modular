@@ -1,0 +1,403 @@
+version: '3.8'
+
+services:
+  # Database Services
+  staging-postgres:
+    image: postgres:15-alpine
+    container_name: esg-staging-postgres
+    environment:
+      POSTGRES_DB: esg_staging
+      POSTGRES_USER: esg_user
+      POSTGRES_PASSWORD: esg_password
+    volumes:
+      - postgres_staging_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U esg_user -d esg_staging"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  staging-redis:
+    image: redis:7-alpine
+    container_name: esg-staging-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_staging_data:/data
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Core Platform Services
+  api-gateway:
+    image: gnanam-esg/api-gateway:latest
+    container_name: esg-staging-api-gateway
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - REDIS_URL=redis://staging-redis:6379
+      - LOG_LEVEL=INFO
+    ports:
+      - "8000:8000"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      staging-redis:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  aggregation-engine:
+    image: gnanam-esg/aggregation-engine:latest
+    container_name: esg-staging-aggregation-engine
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - REDIS_URL=redis://staging-redis:6379
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8001:8001"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      staging-redis:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  monitoring-dashboard:
+    image: gnanam-esg/monitoring-dashboard:latest
+    container_name: esg-staging-monitoring-dashboard
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8002:8002"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  ai-gateway:
+    image: gnanam-esg/ai-gateway:latest
+    container_name: esg-staging-ai-gateway
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - REDIS_URL=redis://staging-redis:6379
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8003:8003"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      staging-redis:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Frontend Service
+  web-frontend:
+    image: gnanam-esg/web-frontend:latest
+    container_name: esg-staging-web-frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_ENVIRONMENT=staging
+    ports:
+      - "3000:3000"
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Risk Model Services
+  risk-interest-rate:
+    image: gnanam-esg/risk-interest-rate:latest
+    container_name: esg-staging-risk-interest-rate
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8010:8010"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-credit:
+    image: gnanam-esg/risk-credit:latest
+    container_name: esg-staging-risk-credit
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8011:8011"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8011/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-equity:
+    image: gnanam-esg/risk-equity:latest
+    container_name: esg-staging-risk-equity
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8012:8012"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8012/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-foreign-exchange:
+    image: gnanam-esg/risk-foreign-exchange:latest
+    container_name: esg-staging-risk-foreign-exchange
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8013:8013"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8013/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-inflation:
+    image: gnanam-esg/risk-inflation:latest
+    container_name: esg-staging-risk-inflation
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8014:8014"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8014/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-liquidity:
+    image: gnanam-esg/risk-liquidity:latest
+    container_name: esg-staging-risk-liquidity
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8015:8015"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8015/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  risk-counterparty:
+    image: gnanam-esg/risk-counterparty:latest
+    container_name: esg-staging-risk-counterparty
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://esg_user:esg_password@staging-postgres:5432/esg_staging
+      - API_GATEWAY_URL=http://api-gateway:8000
+      - LOG_LEVEL=INFO
+    ports:
+      - "8016:8016"
+    depends_on:
+      staging-postgres:
+        condition: service_healthy
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - esg-staging-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8016/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Monitoring Services
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: esg-staging-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_staging_data:/prometheus
+    networks:
+      - esg-staging-network
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: esg-staging-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_staging_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    networks:
+      - esg-staging-network
+    restart: unless-stopped
+
+  # Load Balancer
+  nginx:
+    image: nginx:alpine
+    container_name: esg-staging-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - api-gateway
+      - web-frontend
+    networks:
+      - esg-staging-network
+    restart: unless-stopped
+
+volumes:
+  postgres_staging_data:
+    driver: local
+  redis_staging_data:
+    driver: local
+  prometheus_staging_data:
+    driver: local
+  grafana_staging_data:
+    driver: local
+
+networks:
+  esg-staging-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 
