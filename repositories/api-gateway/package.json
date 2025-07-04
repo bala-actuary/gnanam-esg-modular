@@ -1,28 +1,62 @@
 {
   "name": "@gnanam/api-gateway",
   "version": "1.0.0",
-  "description": "api-gateway module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "ESG API Gateway Service",
+  "main": "src/main.py",
   "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "lint": "eslint src --ext .ts"
+    "start": "uvicorn src.main:app --host 0.0.0.0 --port 8000",
+    "dev": "uvicorn src.main:app --reload --host 0.0.0.0 --port 8000",
+    "test": "python -m pytest tests/",
+    "test:unit": "python -m pytest tests/unit/",
+    "test:integration": "python -m pytest tests/integration/",
+    "test:coverage": "python -m pytest --cov=src tests/",
+    "lint": "flake8 src/ tests/",
+    "format": "black src/ tests/",
+    "build": "docker build -t gnanam/api-gateway .",
+    "deploy": "docker-compose up -d"
   },
   "dependencies": {
     "@gnanam/types": "workspace:*",
-    "@gnanam/utils": "workspace:*"
+    "@gnanam/utils": "workspace:*",
+    "@gnanam/contracts": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
-    "typescript": "^5.2.0",
-    "jest": "^29.0.0",
-    "@types/jest": "^29.0.0"
+    "pytest": "^7.0.0",
+    "pytest-cov": "^4.0.0",
+    "pytest-asyncio": "^0.21.0",
+    "httpx": "^0.24.0",
+    "black": "^23.0.0",
+    "flake8": "^6.0.0",
+    "mypy": "^1.0.0"
+  },
+  "python": {
+    "version": ">=3.8",
+    "dependencies": {
+      "fastapi": "^0.100.0",
+      "uvicorn": "^0.23.0",
+      "pydantic": "^2.0.0",
+      "sqlalchemy": "^2.0.0",
+      "alembic": "^1.11.0",
+      "redis": "^4.6.0",
+      "celery": "^5.3.0",
+      "prometheus-client": "^0.17.0",
+      "structlog": "^23.1.0",
+      "httpx": "^0.24.0",
+      "aiohttp": "^3.8.0"
+    }
   },
   "keywords": [
     "esg",
-    "risk-models"
+    "api-gateway",
+    "fastapi",
+    "microservices",
+    "risk-management",
+    "financial-models"
   ],
-  "author": "Gnanam Team",
-  "license": "MIT"
+  "author": "Gnanam ESG Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnanam/api-gateway.git"
+  }
 }
