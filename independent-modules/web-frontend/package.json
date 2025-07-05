@@ -1,0 +1,78 @@
+{
+  "name": "@gnanam/web-frontend",
+  "version": "1.0.0",
+  "description": "ESG Web Frontend Application",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write src/**/*.{ts,tsx,css,md}",
+    "type-check": "tsc --noEmit",
+    "dev": "react-scripts start",
+    "prod": "npm run build && serve -s build"
+  },
+  "dependencies": {
+    "@gnanam/types": "workspace:*",
+    "@gnanam/utils": "workspace:*",
+    "@gnanam/contracts": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.0",
+    "web-vitals": "^3.3.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/node": "^18.0.0",
+    "axios": "^1.3.0",
+    "chart.js": "^4.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "recharts": "^2.5.0",
+    "antd": "^5.0.0",
+    "styled-components": "^5.3.0",
+    "@types/styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.0",
+    "@types/jest": "^29.0.0",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-react": "^7.32.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.0",
+    "serve": "^14.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "keywords": [
+    "esg",
+    "react",
+    "typescript",
+    "frontend",
+    "dashboard",
+    "risk-management",
+    "web-application"
+  ],
+  "author": "Gnanam ESG Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnanam/web-frontend.git"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "@gnanam/aggregation-engine",
+  "version": "1.0.0",
+  "description": "ESG Risk Aggregation Engine (RADF)",
+  "main": "src/__main__.py",
+  "scripts": {
+    "start": "python src/__main__.py",
+    "dev": "python src/__main__.py --dev",
+    "test": "python -m pytest tests/",
+    "test:unit": "python -m pytest tests/unit/",
+    "test:integration": "python -m pytest tests/integration/",
+    "test:coverage": "python -m pytest --cov=src tests/",
+    "lint": "flake8 src/ tests/",
+    "format": "black src/ tests/",
+    "build": "python setup.py build",
+    "harness": "python src/test_harness.py"
+  },
+  "dependencies": {
+    "@gnanam/types": "workspace:*",
+    "@gnanam/utils": "workspace:*",
+    "@gnanam/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "pytest": "^7.0.0",
+    "pytest-cov": "^4.0.0",
+    "pytest-mock": "^3.10.0",
+    "black": "^23.0.0",
+    "flake8": "^6.0.0",
+    "mypy": "^1.0.0"
+  },
+  "python": {
+    "version": ">=3.8",
+    "dependencies": {
+      "numpy": "^1.24.0",
+      "scipy": "^1.10.0",
+      "pandas": "^2.0.0",
+      "matplotlib": "^3.7.0",
+      "seaborn": "^0.12.0",
+      "pydantic": "^2.0.0",
+      "structlog": "^23.1.0",
+      "click": "^8.1.0",
+      "rich": "^13.0.0"
+    }
+  },
+  "keywords": [
+    "esg",
+    "risk-aggregation",
+    "radf",
+    "risk-models",
+    "financial-models",
+    "portfolio-risk"
+  ],
+  "author": "Gnanam ESG Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnanam/aggregation-engine.git"
+  }
+}

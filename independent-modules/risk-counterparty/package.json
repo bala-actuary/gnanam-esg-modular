@@ -1,0 +1,52 @@
+{
+  "name": "@gnanam/risk-counterparty",
+  "version": "1.0.0",
+  "description": "ESG Counterparty Risk Models",
+  "main": "src/index.py",
+  "scripts": {
+    "test": "python -m pytest tests/",
+    "test:unit": "python -m pytest tests/unit/",
+    "test:integration": "python -m pytest tests/integration/",
+    "test:coverage": "python -m pytest --cov=src tests/",
+    "lint": "flake8 src/ tests/",
+    "format": "black src/ tests/",
+    "build": "python setup.py build",
+    "dev": "python -m src.main"
+  },
+  "dependencies": {
+    "@gnanam/types": "workspace:*",
+    "@gnanam/utils": "workspace:*",
+    "@gnanam/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "pytest": "^7.0.0",
+    "pytest-cov": "^4.0.0",
+    "black": "^23.0.0",
+    "flake8": "^6.0.0",
+    "mypy": "^1.0.0"
+  },
+  "python": {
+    "version": ">=3.8",
+    "dependencies": {
+      "numpy": "^1.24.0",
+      "scipy": "^1.10.0",
+      "pandas": "^2.0.0",
+      "matplotlib": "^3.7.0",
+      "seaborn": "^0.12.0"
+    }
+  },
+  "keywords": [
+    "esg",
+    "risk-management",
+    "counterparty-risk",
+    "credit-exposure",
+    "default-risk",
+    "financial-models"
+  ],
+  "author": "Gnanam ESG Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnanam/risk-counterparty.git"
+  }
+}

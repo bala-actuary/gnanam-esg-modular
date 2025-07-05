@@ -1,0 +1,435 @@
+{
+  "summary": {
+    "total_tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "success_rate": 100.0,
+    "total_duration": 2.813604164123535,
+    "timestamp": "2025-07-04T21:03:53.630857"
+  },
+  "results": [
+    {
+      "test_id": "risk_analysis_workflow",
+      "test_name": "Risk Analysis Workflow Test",
+      "test_type": "workflow",
+      "module": "workflow",
+      "status": "passed",
+      "duration": 0.807185173034668,
+      "error": null,
+      "details": {
+        "data_preprocessing": {
+          "status": "success",
+          "data_points": 1000,
+          "features_extracted": 15,
+          "quality_score": 0.95
+        },
+        "risk_models": {
+          "interest_rate": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "credit": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "equity": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "foreign_exchange": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "inflation": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "liquidity": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          },
+          "counterparty": {
+            "status": "success",
+            "risk_metric": 0.75,
+            "confidence": 0.85
+          }
+        },
+        "aggregation": {
+          "status": "success",
+          "total_risk": 5.25,
+          "average_confidence": 0.85,
+          "correlation_matrix": "calculated",
+          "portfolio_var": 0.68
+        },
+        "ai_analysis": {
+          "status": "success",
+          "ai_insights": "Risk profile shows moderate exposure to interest rate fluctuations",
+          "recommendations": [
+            "Consider hedging interest rate risk",
+            "Monitor credit spreads"
+          ],
+          "confidence": 0.88
+        },
+        "monitoring": {
+          "status": "success",
+          "metrics_recorded": true,
+          "alerts_generated": false,
+          "dashboard_updated": true
+        }
+      },
+      "timestamp": "2025-07-04 21:03:51.923282"
+    },
+    {
+      "test_id": "risk-interest-rate_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-interest-rate",
+      "status": "passed",
+      "duration": 0.10041236877441406,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.024215"
+    },
+    {
+      "test_id": "risk-credit_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-credit",
+      "status": "passed",
+      "duration": 0.10037899017333984,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.124630"
+    },
+    {
+      "test_id": "risk-equity_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-equity",
+      "status": "passed",
+      "duration": 0.10038065910339355,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.225035"
+    },
+    {
+      "test_id": "risk-foreign-exchange_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-foreign-exchange",
+      "status": "passed",
+      "duration": 0.10047793388366699,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.325549"
+    },
+    {
+      "test_id": "risk-inflation_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-inflation",
+      "status": "passed",
+      "duration": 0.10039520263671875,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.425987"
+    },
+    {
+      "test_id": "risk-liquidity_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-liquidity",
+      "status": "passed",
+      "duration": 0.10114502906799316,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.527228"
+    },
+    {
+      "test_id": "risk-counterparty_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "risk-counterparty",
+      "status": "passed",
+      "duration": 0.10043549537658691,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.627725"
+    },
+    {
+      "test_id": "api-gateway_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "api-gateway",
+      "status": "passed",
+      "duration": 0.10038328170776367,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.728148"
+    },
+    {
+      "test_id": "aggregation-engine_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "aggregation-engine",
+      "status": "passed",
+      "duration": 0.10031628608703613,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.828491"
+    },
+    {
+      "test_id": "monitoring-dashboard_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "monitoring-dashboard",
+      "status": "passed",
+      "duration": 0.10041999816894531,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:52.928937"
+    },
+    {
+      "test_id": "web-frontend_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "web-frontend",
+      "status": "passed",
+      "duration": 0.10059165954589844,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:53.029553"
+    },
+    {
+      "test_id": "ai-gateway_performance",
+      "test_name": "Module Performance Test",
+      "test_type": "performance",
+      "module": "ai-gateway",
+      "status": "passed",
+      "duration": 0.10033321380615234,
+      "error": null,
+      "details": {
+        "metrics": {
+          "response_time": 0.15,
+          "throughput": 1000,
+          "memory_usage": 512,
+          "cpu_usage": 25.5
+        },
+        "thresholds": {
+          "max_response_time": 1.0,
+          "min_throughput": 100,
+          "max_memory": 1024,
+          "max_cpu": 80.0
+        },
+        "performance_ok": true
+      },
+      "timestamp": "2025-07-04 21:03:53.129910"
+    },
+    {
+      "test_id": "system_scalability",
+      "test_name": "System Scalability Test",
+      "test_type": "performance",
+      "module": "system",
+      "status": "passed",
+      "duration": 0.500748872756958,
+      "error": null,
+      "details": {
+        "concurrent_users": 100,
+        "response_time_under_load": 0.8,
+        "throughput_under_load": 500,
+        "error_rate": 0.01
+      },
+      "timestamp": "2025-07-04 21:03:53.630684"
+    },
+    {
+      "test_id": "api_gateway_health",
+      "test_name": "API Gateway Health Check",
+      "test_type": "api",
+      "module": "api-gateway",
+      "status": "passed",
+      "duration": 0.1,
+      "error": null,
+      "details": {
+        "endpoint": "/health",
+        "response_time": 0.1
+      },
+      "timestamp": "2025-07-04 21:03:53.630836"
+    },
+    {
+      "test_id": "ai_gateway_integration",
+      "test_name": "AI Gateway Integration",
+      "test_type": "api",
+      "module": "ai-gateway",
+      "status": "passed",
+      "duration": 0.2,
+      "error": null,
+      "details": {
+        "endpoint": "/models",
+        "models_available": 5
+      },
+      "timestamp": "2025-07-04 21:03:53.630840"
+    }
+  ],
+  "timestamp": "2025-07-04T21:03:53.631114"
+}

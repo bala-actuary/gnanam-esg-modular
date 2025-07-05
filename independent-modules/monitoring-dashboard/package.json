@@ -1,0 +1,60 @@
+{
+  "name": "@gnanam/monitoring-dashboard",
+  "version": "1.0.0",
+  "description": "ESG Monitoring Dashboard Service",
+  "main": "src/monitoring.py",
+  "scripts": {
+    "start": "python src/monitoring.py",
+    "dev": "python src/monitoring.py --dev",
+    "test": "python -m pytest tests/",
+    "test:unit": "python -m pytest tests/unit/",
+    "test:integration": "python -m pytest tests/integration/",
+    "test:coverage": "python -m pytest --cov=src tests/",
+    "lint": "flake8 src/ tests/",
+    "format": "black src/ tests/",
+    "build": "python setup.py build",
+    "dashboard": "streamlit run src/dashboard.py"
+  },
+  "dependencies": {
+    "@gnanam/types": "workspace:*",
+    "@gnanam/utils": "workspace:*",
+    "@gnanam/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "pytest": "^7.0.0",
+    "pytest-cov": "^4.0.0",
+    "pytest-mock": "^3.10.0",
+    "black": "^23.0.0",
+    "flake8": "^6.0.0",
+    "mypy": "^1.0.0"
+  },
+  "python": {
+    "version": ">=3.8",
+    "dependencies": {
+      "streamlit": "^1.25.0",
+      "plotly": "^5.15.0",
+      "dash": "^2.11.0",
+      "pandas": "^2.0.0",
+      "numpy": "^1.24.0",
+      "prometheus-client": "^0.17.0",
+      "structlog": "^23.1.0",
+      "fastapi": "^0.100.0",
+      "uvicorn": "^0.23.0"
+    }
+  },
+  "keywords": [
+    "esg",
+    "monitoring",
+    "dashboard",
+    "streamlit",
+    "plotly",
+    "risk-management",
+    "real-time-monitoring"
+  ],
+  "author": "Gnanam ESG Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnanam/monitoring-dashboard.git"
+  }
+}

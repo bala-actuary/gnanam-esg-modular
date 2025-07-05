@@ -1,0 +1,17 @@
+scenario_name: "Sample Interest Rate + Credit"
+models:
+  - name: HullWhiteOneFactor
+    id: hw1f
+    params:
+      num_paths: 1000
+      time_horizon: 1.0
+  - name: MertonModel
+    id: merton
+    depends_on: [hw1f]
+    params:
+      num_paths: 1000
+      time_horizon: 1.0
+aggregation:
+  method: VaR
+  models: [hw1f, merton]
+  confidence_level: 0.99
